@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Navbar from "./Navbar";
+import Main from "./Main";
+import movieData from "./tempMovieData";
+import Search from "./Search";
+import NumberResults from "./NumberResults";
+import Box from "./Box";
+import MoviesList from "./MoviesList";
+import Summary from "./Summary";
+import WatchedList from "./WatchedList";
+import watchedData from "./tempWatchedData";
 
-function App() {
+export default function App() {
+  const [movies, setMovies] = useState(movieData);
+  const [watched, setWatched] = useState(watchedData);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar>
+        <Search />
+        <NumberResults movies={movies} />
+      </Navbar>
+      <Main>
+        <Box>
+          <MoviesList movies={movies} />
+        </Box>
+        <Box>
+          <Summary watched={watched} />
+          <WatchedList watched={watched} />
+        </Box>
+      </Main>
+    </>
   );
 }
-
-export default App;
