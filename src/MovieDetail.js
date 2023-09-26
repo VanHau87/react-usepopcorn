@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
@@ -13,6 +13,7 @@ function MovieDetail({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
+  const countRef = useRef(0);
   const {
     Title: title,
     Poster: poster,
@@ -24,6 +25,9 @@ function MovieDetail({
     Director: director,
     Genre: genre,
   } = movie;
+  useEffect(() => {
+    if (userRating) countRef.current++;
+  }, [userRating]);
   useEffect(() => {
     const escEvent = (e) => {
       if (e.code === "Escape") onCloseMovie();
@@ -58,6 +62,7 @@ function MovieDetail({
       imdbRating: Number(imdbRating),
       poster,
       userRating,
+      countDecision: countRef.current,
     };
     onAddWatchedMovies(movie);
     onCloseMovie();
